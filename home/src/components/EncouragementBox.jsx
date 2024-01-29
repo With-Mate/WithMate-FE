@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const EncouragementBox = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [selectedMessage, setSelectedMessage] = useState('choose your encouragement massage');
+  const [selectedMessage, setSelectedMessage] = useState('choose your encouragement message');
 
   const encouragementMessages = [
     "You're capable of turning dreams into reality.",
@@ -40,7 +40,7 @@ const EncouragementBox = () => {
 
       {showDropdown && (
         <Dropdown onChange={handleDropdownChange} value={selectedMessage}>
-          <option disabled>choose your encouragement massage</option>
+          <option disabled>choose your encouragement message</option>
           {encouragementMessages.map((message, index) => (
             <option key={index} value={message}>
               {message}
@@ -56,20 +56,18 @@ const EncouragementBox = () => {
 
 const EncouragementContainer = styled.div`
   text-align: left;
-//   margin: 20px;
+
 `;
 
 const Button = styled.button`
-//   padding: 10px;
+
   background-color: rgb(201, 181, 219);
   color: black;
-//   border: none;
-//   border-radius: 5px;
-//   cursor: pointer;
+
 `;
 
 const Dropdown = styled.select`
-//   padding: 5px;
+
   font-size: 16px; 
 `;
 

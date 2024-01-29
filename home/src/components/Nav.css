@@ -1,21 +1,21 @@
 .navbar{
     width:100%;
-    background-color: rgb(201, 181, 219);
+    background-color:rgb(216, 223, 248);
     padding:12px 0px;
     text-align: right;
-    border-Radius: 2%; 
+    border-Radius: 20px; 
+    font-size: 20px;
 }
-.navbarmenu{
-    display: flex;
-    display: table-column;
-    background-color: rgb(201, 181, 219);
-    color: white;
-    margin: 8px;
-    text-decoration:none;
-}
+
+
+
 h1{
-    color: white;
-    margin: 10px;
+    background-color: white;
+    color:rgb(117, 0, 98);
+    margin: 15px;
     text-align: left;
+    position:absolute;
+    left:10px;
+    border-radius: 20px;
+
 }
-   
