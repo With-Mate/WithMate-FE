@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+
 import Nav from '../components/Nav';
 import styled from 'styled-components';
 import EncouragementBox from '../components/EncouragementBox';
@@ -27,7 +27,7 @@ const Home = () => {
           <img src="mate.png" style={{width: '850px', height: '550px', borderRadius: '40%',boxShadow: '5px 5px 20px rgba(0, 0, 0, 0.2)'}}/>
         </div>
       </Main>
-      <Message1><EncouragementBox /> </Message1>
+      <EncouragementBox />
       <EncouragementBox2/>
       <MyGoal/>
       <MateGoal/>
@@ -43,13 +43,13 @@ const Main=styled.div`
     
 `;
 
-const Message1=styled.div`
-    position:absolute;
-    top:300px;
-    left:60px;
-    background-color:rgb(245, 245, 245);
-    border: 2px solid lightgrey;
-    padding: 15px;
-    box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
-`
+// const Message1=styled.div`
+//     position:absolute;
+//     top:300px;
+//     left:60px;
+//     background-color:rgb(245, 245, 245);
+//     border: 2px solid lightgrey;
+//     padding: 15px;
+//     box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+// `
 

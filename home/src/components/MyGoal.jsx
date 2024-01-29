@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import styled from 'styled-components';
 function MyGoal() {
     
@@ -22,7 +22,7 @@ font-weight:bold;
 position:absolute;
 bottom:150px;
 padding:30px;
-left:60px;
+left:80px;
 background-color:  rgb(246, 227, 255);
 border: 3px solid rgb(199, 148, 207);
 
