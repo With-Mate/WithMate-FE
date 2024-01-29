@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import styled from 'styled-components';
 function EncouragementBox2() {
  return (
@@ -16,7 +16,7 @@ font-size:30px;
 position:absolute;
 font-Weight:bold;
 top:300px;
-right:120px;
+right:150px;
 background-color:rgb(245, 245, 245);
 border: 2px solid lightgrey;
 padding:30px;
