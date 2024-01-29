@@ -1,0 +1,21 @@
+.navbar{
+    width:100%;
+    background-color:rgb(216, 223, 248);
+    padding:12px 0px;
+    text-align: right;
+    border-Radius: 20px; 
+    font-size: 20px;
+}
+
+
+
+h1{
+    background-color: white;
+    color:rgb(117, 0, 98);
+    margin: 15px;
+    text-align: left;
+    position:absolute;
+    left:10px;
+    border-radius: 20px;
+
+}
