@@ -1,27 +1,28 @@
 
 import styled from 'styled-components';
 function EncouragementBox2() {
- return (
+return (
     <>
     <Message2>
         USER2: CHEER UP~!
     </Message2>    
     </>
- )
+    // api 정보 받아와야함
+)
 
 }
 
-const Message2=styled.div`
-font-size:30px;
-position:absolute;
-font-Weight:bold;
-top:300px;
-right:150px;
-background-color:rgb(245, 245, 245);
+
+const Message2 = styled.div`
+font-size: 1.5vw;
+font-weight: bold;
+position: absolute;
+top: 32vh; 
+right: 25vh; 
+background-color: rgb(245, 245, 245);
 border: 2px solid lightgrey;
-padding:30px;
-box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+padding: 2vw; 
+box-shadow: 0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.2); 
+`;
 
-
-`
 export default EncouragementBox2;

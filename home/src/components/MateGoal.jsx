@@ -12,18 +12,18 @@ function MateGoal() {
     
     </>
  )
+ //APi 받아와야함
 
 
 }
-
-const Message4=styled.div`
-font-size:30px;
-font-Weight:bold;
-position:absolute;
-bottom:150px;
-right:55px;
-padding:30px;
-background-color:rgb(246, 227, 255);
+const Message4 = styled.div`
+font-size: 1.5vw;
+font-weight: bold;
+position: absolute;
+bottom: 12vh;
+right: 20vh; 
+background-color:  rgb(246, 227, 255);
 border: 3px solid rgb(199, 148, 207);
-`
+padding: 2vw; 
+`;
 export default MateGoal;
