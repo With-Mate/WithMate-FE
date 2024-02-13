@@ -1,27 +1,26 @@
-
 import styled from 'styled-components';
-function EncouragementBox() {
-return (
-    <>
-    <Message5>
-      USRER1: You are the best!
-    </Message5>    
-    </>
- )
 
+function EncouragementBox() {
+  return (
+    <>
+      <Message1>
+        USRER1: You are the best!
+      </Message1>
+      {/* APi연결해야함 */}
+    </>
+  );
 }
 
-const Message5=styled.div`
-font-size:30px;
-position:absolute;
-font-Weight:bold;
-top:300px;
-left:70px;
-background-color:rgb(245, 245, 245);
-border: 2px solid lightgrey;
-padding:30px;
-box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.2);
+const Message1 = styled.div`
+  font-size: 1.5vw;
+  font-weight: bold;
+  position: absolute;
+  top: 32vh;
+  left: 20vh; 
+  background-color: rgb(245, 245, 245);
+  border: 2px solid lightgrey;
+  padding: 2vw; 
+  box-shadow: 0.5vw 0.5vw 1vw rgba(0, 0, 0, 0.2);
+`;
 
-
-`
 export default EncouragementBox;

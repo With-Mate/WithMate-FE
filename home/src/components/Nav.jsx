@@ -3,7 +3,7 @@ import './Nav.css';
 
 function Nav(){
     return (
-    <div>
+    <>
         <div className="navbar">
             <h1> WithMate </h1>
             <Link to="/" style={{
@@ -22,7 +22,6 @@ function Nav(){
                 padding:' 20px 20px',
                 borderRadius:'8px',
                 display:'inline-block',
-             
             }}>• Goal </Link>
             <Link to="/managing mate" style={{                
                 textDecoration: 'none',
@@ -49,10 +48,8 @@ function Nav(){
                 borderRadius:'8px',
                 display:'inline-block',
             }}>• Setting  </Link>
-
-           
         </div>
-    </div>
+        </>
     )
 
 }
