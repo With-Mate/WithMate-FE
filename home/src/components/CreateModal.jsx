@@ -41,21 +41,26 @@ Modal.propTypes = {
   onTextSubmit: PropTypes.func.isRequired,
 };
 
+
+// 프로필 화면에서 모달이 엉뚱한 곳에 뜨는 문제 (첫 슬라이드에서 모달 열었는데 세번째 슬라이드에,,,)
+// fixed,top,left,transform모두 삭제 후 height 100으로 
 const ModalOverlay = styled.div`
-   
-  position: fixed;
-  top: 50%;
+   /* background-color: aliceblue; */
+  /* position: fixed; */
+  /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); /* 중앙 정렬을 위한 이동 */
+  transform: translate(-50%, -50%); 중앙 정렬을 위한 이동 */
   /* filter: blur(10px); /* 흐림 효과 적용 */
   /* opacity: 0.8; 투명도 조절 */ 
-  width: 90%;
-  height: 90%;
+  /* width: 10%;
+  height: 90%; */
+  height: 100%;
   /* background: rgba(0, 0, 0, 0.5); */
   display: flex;
   justify-content: center;
   overflow: hidden; /* 이미지가 컨테이너를 벗어나지 않도록 */
   align-items: center;
+  z-index: 10;
 `;
 
 const ModalContent = styled.div`

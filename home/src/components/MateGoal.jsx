@@ -1,19 +1,16 @@
 
 import styled from 'styled-components';
+
 function MateGoal() {
-
- return (
+  return (
     <>
-    <Message4>
-    USER2
-    <br />
-    BE A GOOD MOTHER!
-    </Message4>
-    
+      <Message4>
+        USER2
+        <br />
+        BE A GOOD MOTHER!
+      </Message4>
     </>
- )
-
-
+  );
 }
 
 const Message4=styled.div`
