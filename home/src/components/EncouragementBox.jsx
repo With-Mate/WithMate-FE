@@ -4,7 +4,7 @@ function EncouragementBox() {
 return (
     <>
     <Message5>
-      USRER1: You are the best!
+      USER1: You are the best!
     </Message5>    
     </>
  )
