@@ -111,7 +111,7 @@ const Signup = () => {
         },
       })
       .then((result) => {
-        console.log(result);
+        console.log("Res : "+ result);
         console.log("singupDB!");
         window.alert('회원가입이 되었습니다! 로그인 페이지로 이동합니다.');
         navigate('/login');
