@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const url = import.meta.env.VITE_SignupAPI_URL;
 
+
 const SignupContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,6 +16,7 @@ const SignupContainer = styled.div`
   margin-top: 5vh;
   margin-bottom: 15vh;
   background-color:rgb(253, 250, 230);
+  border-radius: 30px; 
 
   h2{
     color: purple;

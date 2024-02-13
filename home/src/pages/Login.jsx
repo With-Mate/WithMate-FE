@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../cookie';
-
+import Nav from "../components/Nav";
 
 const url = import.meta.env.VITE_LoginAPI_URL;
 
@@ -16,14 +16,17 @@ const LoginContainer = styled.div`
   justify-content: center; /* 수직 정렬을 위해 추가 */
   margin-left: 30vw;
   margin-right: 30vw;
-  height:80vh;
-  margin-top: 5vh;
-  margin-bottom: 15vh;
+  height:60vh;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
   background-color:rgb(253, 250, 230);
+
+  border-radius: 30px; 
 
   h2{
     color: purple;
     font-size: 3em;
+    margin-bottom: 7vh;
   }
 
   form{
@@ -89,6 +92,9 @@ const Login = () => {
  
 
   return (
+
+    <>
+   <Nav/>
     <LoginContainer>
       <h2>WithMate</h2>
       <form onSubmit={onSubmitHandler} >
@@ -110,6 +116,7 @@ const Login = () => {
      <Button type="submit">Log In</Button>
       </form>
     </LoginContainer>
+    </>
   );
 };
 
