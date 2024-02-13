@@ -1,15 +1,14 @@
 
 import styled from 'styled-components';
-function MateGoal() {
 
- return (
+function MateGoal() {
+  return (
     <>
-    <Message4>
-    USER2
-    <br />
-    BE A GOOD MOTHER!
-    </Message4>
-    
+      <Message4>
+        USER2
+        <br />
+        BE A GOOD MOTHER!
+      </Message4>
     </>
  )
  //APi 받아와야함
