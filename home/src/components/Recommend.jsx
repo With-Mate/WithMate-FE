@@ -1,16 +1,7 @@
-// import { useEffect, useState } from 'react';
+
 import styled from 'styled-components';
 
 function Recommend() {
-//   const [profiles, setProfiles] = useState([]);
-
-//   useEffect(() => {
-    
-//     fetch('34.70.229.21:8080/api/match/people')
-//       .then(response => response.json())
-//       .then(data => setProfiles(data))
-//       .catch(error => console.error(error));
-//   }, []);
 
   return (
     <>
