@@ -1,5 +1,4 @@
 import { useState } from 'react';
-//api 보내기
 const Writemygoal = () => {
   const [goal, setGoal] = useState('');
 
@@ -14,8 +13,8 @@ const Writemygoal = () => {
   };
 
   const saveGoal = () => {
-    // goal 값을 여기에서 저장
-    console.log('Saved goal:', goal);
+    
+    
   };
 
   return (

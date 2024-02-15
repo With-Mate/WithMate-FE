@@ -23,6 +23,7 @@ const Managingmate= () =>{
         <h4 style={{position:'absolute', right:'20vw', top:'70vh', padding:'0.5vw',fontSize:'1.5vw'}} > <Givemessage/> </h4>
         </DataContainer>
         <Link to="/Report" style={{textDecoration: 'none'}} ><RePort>REPORT </RePort></Link>
+        <Link to="/start">start </Link>
         </>
     )
 }

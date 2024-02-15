@@ -33,7 +33,7 @@ return (
 
 
 
-        <Link to="/my profile" style={{textDecoration:'none'}}> 
+        <Link to="/my profile" style={{textDecoration:'none',display:'inline-block'}}> 
         {/* 상대의 프로필 로드시키는 코드로 바꾸기 */}
         <ProfileContainer>
         <img src="mateprofile.jpg" style={{
@@ -64,7 +64,6 @@ const ProfileContainer=styled.button`
     height:17vh;
     padding:1vw;
     margin:3vw;
-    position: absolute;
     left:22vw;
     
 `
