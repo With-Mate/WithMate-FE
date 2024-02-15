@@ -5,8 +5,8 @@ function Nav(){
     return (
     <>
         <div className="navbar">
-            <h1> WithMate </h1>
-            <Link to="/" style={{
+            <Link to="/"><h1> WithMate </h1></Link>
+            <Link to="/home" style={{
                 textDecoration: 'none',
                 color: 'rgb(117, 0, 98)',
                 fontWeight:'bold',
