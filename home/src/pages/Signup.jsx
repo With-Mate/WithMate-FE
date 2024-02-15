@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-const url = import.meta.env.VITE_SignupAPI_URL;
+// const url = import.meta.env.VITE_SignupAPI_URL;
 
 
 const SignupContainer = styled.div`
@@ -98,7 +98,7 @@ const Signup = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     
-    axios.post(url,
+    axios.post("http://34.70.229.21:8080/signup",
       {
         email: email,           
         passwd: password,

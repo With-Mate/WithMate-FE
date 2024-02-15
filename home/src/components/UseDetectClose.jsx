@@ -28,3 +28,4 @@ const useDetectClose = (initialState) => {
 };
 
 export default useDetectClose;
+useDetectClose.js

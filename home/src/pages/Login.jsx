@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../cookie';
 import Nav from "../components/Nav";
 
-const url = import.meta.env.VITE_LoginAPI_URL;
+// const url = import.meta.env.VITE_LoginAPI_URL;
 
 const LoginContainer = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ const LoginContainer = styled.div`
   }
 
   form{
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; /* 수직 정렬을 위해 추가 */
@@ -62,7 +62,7 @@ const Login = () => {
   const onSubmitHandler = (event) => {
     event.preventDefault();
     
-    axios.post(url,
+    axios.post("http://34.70.229.21:8080/login",
       {
         
         userName: username,
