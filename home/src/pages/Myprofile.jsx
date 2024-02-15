@@ -5,11 +5,34 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 // import React from 'react';
+import axios from 'axios';
+import { getCookie } from '../cookie';
 
-import { useRef } from 'react';
+import {useEffect, useRef,useState } from 'react';
 
 const Myprofile= () =>{
+  const [username, setUsername] = useState('');
+  const [accessDate, setAccessdate] = useState(''); //log(최근접속일자)
+  const [signupDate, setSignupdate] = useState(''); //reg(가입일자)
   const sliderRef = useRef(null); // useRef로 sliderRef 정의
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 데이터 가져오기
+    axios.get("http://34.70.229.21:8080/api/self/profile",
+    {headers: {
+            
+             Authorization:getCookie('is_login'),
+           },}) 
+    .then(response => {
+      // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+      console.log(response.data);
+      setUsername(response.data.nickname);
+      setAccessdate(response.data.loginDate);
+      setSignupdate(response.data.regDate);
+    })
+      .catch(error => {
+        console.error('Error fetching stickers:', error);
+      });
+  }, []);
   const settings = {
     dots: true,
     infinite: true,
@@ -34,10 +57,11 @@ const Myprofile= () =>{
     <Maincont>
     <Content>
         <info>
-          <name>< img  src="profile.jpg" alt='프로필이미지' style={{width:'50px' ,height:'50px',  borderRadius: '70%', marginRight:'15px',marginTop:'5px'}}/> user_me</name>
+          <name>< img  src="profile.jpg" alt='프로필이미지' style={{width:'5vh' ,height:'5vh',  borderRadius: '70%', marginRight:'1vw'}}/> {username} </name>
+          
           <date> 
-          <span>가입일자 : 2023.01.20</span>
-          <span>최근 접속일자 : 2023.01.31</span>
+          <span>Registration date : {signupDate}</span>
+          <span>Last login date : {accessDate}</span>
           </date>
           </info>
 
@@ -139,6 +163,7 @@ span{
     /* top : 50%;
     left:2%; */
     text-decoration:solid;
+    font-weight: bold;
     margin-left: 5%;
     /* margin-left: 10%;
     margin-top: 50%; */
@@ -175,10 +200,10 @@ position: absolute; */
 display: flex;
 flex-direction: row;
 margin-left : 5vw;
-margin-top : 1vh;
+margin-top : 2vh;
 font-size : 30px;
 font-weight: bold;
-
+margin-bottom: 1vh;
 }
 
 date{
@@ -190,7 +215,8 @@ bottom : 5%;  */
 /* margin-left : 80%;
 margin-bottom: 1%; */
 margin-left:auto;
-margin-right: 5%;
+margin-right: 3%;
+font-weight: 500;
 /* background-color: yellow; */
 
 span{

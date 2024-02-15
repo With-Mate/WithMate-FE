@@ -5,16 +5,16 @@ import StickerBoard from '../components/StickerBoard';
 
 const Home = () => {
   
-  const goalText = "GOAL : ";
-  const firstName = "BE A GOOD FATHER ";
-  const lastName = "BE A GOOD MOTHER ";
+  // const goalText = "GOAL : ";
+  // const firstName = "BE A GOOD FATHER ";
+  // const lastName = "BE A GOOD MOTHER ";
 
   
   return (
     <>
       <Nav />
       <CenteredContainer>
-        <h2>our sticker board of this week</h2>
+        {/* <h2>our sticker board of this week</h2>
         <Info>
           <span>
             USER1<goal> {`${goalText} ${firstName}`} </goal>
@@ -22,8 +22,8 @@ const Home = () => {
           <span>
             USER2<goal> {`${goalText} ${lastName}`} </goal>
           </span>
-        </Info>
-
+        </Info> */}
+        <h2>our sticker board of this week</h2>
         <StickerBoard backBoxWidth="95vw" backBoxHeight="90vh" />
 
         <Footer>
@@ -69,53 +69,53 @@ const CenteredContainer = styled.div`
 }
     
 `;
-const Info = styled.div`
+// const Info = styled.div`
 
-  /* 상대단위 위주로 수정,불필요한 포지션속성 제거,불필요한 가운데정렬 제거 */
-    background-color: rgb(242, 237, 224);/* section 영역의 배경색을 흰색으로 설정 */
-    width: 95vw; /* section 영역이 부모 요소에 가득 차도록 설정 */
-    height:10vh;
-    /* margin: 0;
-    padding: 0;  */
-    display: flex;
-    justify-content: center; /* 중앙 정렬 설정 */
-    /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);  */
+//   /* 상대단위 위주로 수정,불필요한 포지션속성 제거,불필요한 가운데정렬 제거 */
+//     background-color: rgb(242, 237, 224);/* section 영역의 배경색을 흰색으로 설정 */
+//     width: 95vw; /* section 영역이 부모 요소에 가득 차도록 설정 */
+//     height:10vh;
+//     /* margin: 0;
+//     padding: 0;  */
+//     display: flex;
+//     justify-content: center; /* 중앙 정렬 설정 */
+//     /* box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);  */
    
-    align-items: center; /* 중앙 정렬을 위해 추가 */
-    /* position: absolute; 아래에서 높이가 100vh로 설정되었으므로 상대적인 위치 조절을 위해 absolute 사용 */
-     /* top : 6%;
-     left: 50%; */
+//     align-items: center; /* 중앙 정렬을 위해 추가 */
+//     /* position: absolute; 아래에서 높이가 100vh로 설정되었으므로 상대적인 위치 조절을 위해 absolute 사용 */
+//      /* top : 6%;
+//      left: 50%; */
      
-     /* transform: translate(-50%, -50%); 가운데 정렬 및 상단 정렬 조정 */
+//      /* transform: translate(-50%, -50%); 가운데 정렬 및 상단 정렬 조정 */
 
  
-  goal {
-    /* goal 컴포넌트에 대한 스타일 */
-    background: rgba(253, 253, 253, 0.859);
-    font-weight: bold;
-    width:500px;
-    height:110px;
-    white-space: nowrap;
-    color: #69af95;
-    margin-left: 10px;
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 강조 */
+//   goal {
+//     /* goal 컴포넌트에 대한 스타일 */
+//     background: rgba(253, 253, 253, 0.859);
+//     font-weight: bold;
+//     width:500px;
+//     height:110px;
+//     white-space: nowrap;
+//     color: #69af95;
+//     margin-left: 10px;
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 강조 */
     
-    border: 2px solid darkgrey; /* 테두리 스타일 설정 */
-    padding: 4px; /* 테두리와 요소 내용 사이의 간격 설정 */
-    /* 기타 원하는 스타일 속성 추가 */
-  }
+//     border: 2px solid darkgrey; /* 테두리 스타일 설정 */
+//     padding: 4px; /* 테두리와 요소 내용 사이의 간격 설정 */
+//     /* 기타 원하는 스타일 속성 추가 */
+//   }
   
-  span {
-    font-size: 20px;
-    margin-right: 20%; /* 간격 조절 */
-    margin-left: 20%; /* 간격 조절 */
-    margin-top : 1%;
-    margin-bottom: 25px;
-    font-weight: bold;
-    text-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 강조 */
-  }
+//   span {
+//     font-size: 20px;
+//     margin-right: 20%; /* 간격 조절 */
+//     margin-left: 20%; /* 간격 조절 */
+//     margin-top : 1%;
+//     margin-bottom: 25px;
+//     font-weight: bold;
+//     text-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 강조 */
+//   }
   
-`;
+// `;
 
 
 
