@@ -19,7 +19,6 @@ const LoginContainer = styled.div`
   margin-top: 10vh;
   margin-bottom: 10vh;
   background-color:rgb(253, 250, 230);
-
   border-radius: 30px; 
 
   h2{

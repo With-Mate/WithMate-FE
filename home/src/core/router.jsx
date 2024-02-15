@@ -10,7 +10,7 @@ import Login from '../pages/Login';
  
 import Matchmate from '../pages/Matchmate';
 import Report from '../pages/Report';
-import Start from '../pages/Start';
+
 
 // function Router() {
 //   return (
@@ -42,7 +42,7 @@ import Start from '../pages/Start';
         <Route path="/setting" element={<Setting/>}/>
         <Route path="/mate" element={<Matchmate/>}/>
         <Route path="/Report" element={<Report/>}/>
-        <Route path="/Start" element={<Start/>}/>
+       
       </Routes>
     </BrowserRouter>
   );

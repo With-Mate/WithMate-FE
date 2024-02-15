@@ -31,7 +31,7 @@ const Home = () => {
           borderRadius: '40%',
           boxShadow: '5px 5px 20px rgba(0, 0, 0, 0.2)'
           }}/>
-          <EncouragementBox />
+          <EncouragementBox/>
           <EncouragementBox2/>
           <MyGoal/>
           <MateGoal/>

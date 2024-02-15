@@ -1,7 +1,8 @@
 
 import { useState } from "react";
 import styled, { css } from "styled-components";
-//Api연결 보내기
+import axios from "axios";
+import { getCookie } from "../cookie";
 const Givemessage = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [selectedMessage, setSelectedMessage] = useState('choose your encouragement message');
@@ -27,12 +28,29 @@ const Givemessage = () => {
     setShowDropdown(!showDropdown);
   };
 
-  const handleDropdownChange = (event) => {
+  // const handleDropdownChange = (event) => {
+  //   const selectedMessage = event.target.value;
+  //   setSelectedMessage(selectedMessage);
+  //   setShowDropdown(false);
+  // };
+  const handleDropdownChange = async (event) => {
     const selectedMessage = event.target.value;
     setSelectedMessage(selectedMessage);
     setShowDropdown(false);
-  };
 
+    try {
+      await axios.patch("http://34.70.229.21:8080/api/self/message/update", null, {
+        params: { message: selectedMessage },
+        headers: {
+          Authorization:getCookie('is_login'),
+          'Content-Type': 'application/json',
+          },
+      });
+      console.log("보낸 메시지:",selectedMessage);
+    } catch (error) {
+      console.log("메시지 업데이트 실패:", error);
+    }
+  };
   return (
     <EncouragementContainer>
       <Button onClick={handleButtonClick}>{selectedMessage}</Button>

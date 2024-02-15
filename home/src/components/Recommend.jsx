@@ -1,8 +1,39 @@
 
 import styled from 'styled-components';
-
-function Recommend() {
-
+ import MateProfile from './Mateprofile';
+import {getCookie} from '../cookie';
+import axios from 'axios';
+import PropTypes from 'prop-types';
+function Recommend({ goal, selectedCategory }) {
+  const handleSelectButtonClick = async () => {
+    
+    
+      console.log("My Goal:", goal);
+      console.log("Selected category:", selectedCategory);
+      console.log(getCookie('is_login'))
+  
+      try {
+        const result = await axios.post(
+          "http://34.70.229.21:8080/api/match/relate",
+          {
+            goal: goal,
+            category : selectedCategory,
+          },
+          {
+            headers: {
+              Authorization:getCookie('is_login'),
+              'Content-Type': 'application/json',
+            },
+            
+          }
+        );
+        console.log('Response:',result);
+        console.log('Success');
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    
   return (
     <>
       <h3
@@ -22,7 +53,12 @@ function Recommend() {
       </h3>
       <br />
 
-      <div
+      
+        <ProfileCard >
+         <MateProfile/>
+         {/* <Recmate/> */}
+        </ProfileCard>
+        <div
         style={{
           fontSize: '2vw',
           letterSpacing: '1px',
@@ -33,28 +69,23 @@ function Recommend() {
       >
         Period: 4 weeks (28 days)
       </div>
-        <ProfileCard >
-          <h4>user</h4>
-          <p>Goal: be a good mother </p>
-          <p>Category:health </p>
-          <p>Country:korea </p>
-        </ProfileCard>
-    
-      <Selectmate> SELECT</Selectmate>
+      <Selectmate onClick={handleSelectButtonClick}> SELECT</Selectmate>
     </>
   );
 }
-
+Recommend.propTypes = {
+  goal: PropTypes.string.isRequired,
+  selectedCategory: PropTypes.string.isRequired,
+};
 export default Recommend;
 
 const ProfileCard = styled.div`
   padding: 20px;
-  margin: 20px;
-  background-color: beige;
+  
   border-radius: 10px;
   display: inline-block;
   position: relative;
-  left:42vw;
+  left:35vw;
 `;
 
 const Selectmate=styled.button`

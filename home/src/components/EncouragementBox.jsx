@@ -4,7 +4,7 @@ function EncouragementBox() {
   return (
     <>
       <Message1>
-        USRER1: You are the best!
+        
       </Message1>
       {/* APi연결해야함 */}
     </>
