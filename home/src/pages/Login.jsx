@@ -74,6 +74,7 @@ const Login = () => {
         },
       })
       .then((result) => {
+        console.log("h : "+result.headers)
         console.log("res : "+result.headers.authorization);
         console.log("login");
         const accessToken = result.headers.authorization;
@@ -84,7 +85,7 @@ const Login = () => {
         navigate('/home');
       })
       .catch((error) => {
-        window.alert('로그인 실패');
+        window.alert('로그인 실패! 이미 로그인되어있거나, 아이디/비밀번호가 올바른지 확인하세요');
         console.log(error);
       })      
   };

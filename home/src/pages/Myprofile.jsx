@@ -14,6 +14,7 @@ const Myprofile= () =>{
   const [username, setUsername] = useState('');
   const [accessDate, setAccessdate] = useState(''); //log(최근접속일자)
   const [signupDate, setSignupdate] = useState(''); //reg(가입일자)
+  const [country, setCountry] = useState(''); //reg(가입일자)
   const sliderRef = useRef(null); // useRef로 sliderRef 정의
   useEffect(() => {
     // 컴포넌트가 마운트될 때 데이터 가져오기
@@ -26,8 +27,9 @@ const Myprofile= () =>{
       // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
       console.log(response.data);
       setUsername(response.data.nickname);
-      setAccessdate(response.data.loginDate);
+      setAccessdate(response.data.loginDate)
       setSignupdate(response.data.regDate);
+      setCountry(response.data.country);
     })
       .catch(error => {
         console.error('Error fetching stickers:', error);
@@ -62,6 +64,7 @@ const Myprofile= () =>{
           <date> 
           <span>Registration date : {signupDate}</span>
           <span>Last login date : {accessDate}</span>
+          <span>Country : {country}</span>
           </date>
           </info>
 
@@ -203,7 +206,7 @@ margin-left : 5vw;
 margin-top : 2vh;
 font-size : 30px;
 font-weight: bold;
-margin-bottom: 1vh;
+/* margin-bottom: 1vh; */
 }
 
 date{

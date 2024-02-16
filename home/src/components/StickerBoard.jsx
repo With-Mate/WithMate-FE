@@ -1,17 +1,15 @@
-import  {useState } from 'react';
+import { useEffect,useState } from 'react';
 import styled from 'styled-components';
 import { useRef } from 'react';
 import Modal from './CreateModal';
 import PropTypes from 'prop-types';
 import EditModal from './EditModal';
-// import axios from 'axios';
-// import { getCookie } from '../cookie';
+import axios from 'axios';
+import { getCookie } from '../cookie';
 
 // 화살표함수 방식 : const(let) 변수명 = (매개변수) => {return{ }; };
 const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
-  const goalText = "GOAL : ";
-  const firstName = "BE A GOOD FATHER ";
-  const lastName = "BE A GOOD MOTHER ";
+
   StickerBoard.propTypes = {
     backBoxWidth: PropTypes.string.isRequired, // 예상되는 프로퍼티 유형과 필수 여부를 설정
     backBoxHeight: PropTypes.string.isRequired,
@@ -20,30 +18,69 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [stickers, setStickers] = useState([]);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  
+  const [myStickerCount, setMyStickerCount] = useState(0); // 초기값을 0으로 설정
   const [selectedSticker, setSelectedSticker] = useState(null); // 선택된 스티커 상태 추가
- 
-  //이번주 스티커 미리보기 조회 api
-  // useEffect(() => {
-  //   // 컴포넌트가 마운트될 때 데이터 가져오기
-  //   axios.get("http://34.70.229.21:8080/api/sticker/board") // 예시 URL, 실제 URL로 변경해야 함
-  //   .then(response => {
-  //     // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
-  //     const convertedStickers = response.data.map(stickerDto => ({
-  //       id: stickerDto.id,
-  //       text: stickerDto.title,
-  //       color: stickerDto.stickerColor,
-  //       shape: stickerDto.stickerShape,
-  //       top: `${stickerDto.stickerTop}%`, // 백엔드에서 Long으로 받았지만 문자열 형태로 변경
-  //       left: `${stickerDto.stickerLeft}%`, // 백엔드에서 Long으로 받았지만 문자열 형태로 변경
-  //     }));
-  //     // 스티커 상태 설정
-  //     setStickers(convertedStickers);
-  //   })
-  //     .catch(error => {
-  //       console.error('Error fetching stickers:', error);
-  //     });
-  // }, []); // 빈 배열을 전달하여 컴포넌트가 마운트될 때 한 번만 실행
+  const [myName,setMyname] = useState('');
+  const [mateName,setMatename] = useState('');
+  const [myGoal,setMygoal] = useState('');
+  const [mateGoal,setMategoal] = useState('');
+
+
+//  이번주 스티커 미리보기 조회 api
+  useEffect(() => {
+    //컴포넌트가 마운트될 때 데이터 가져오기
+    axios.get("http://34.70.229.21:8080/api/sticker/board", 
+    {headers: {
+            
+             Authorization:getCookie('is_login'),
+           },})  // 예시 URL, 실제 URL로 변경해야 함
+    .then(response => {
+      // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+      const convertedStickers = response.data.stickerBoard.map(stickerDto => ({
+        id: stickerDto.id,
+        text: stickerDto.title,
+        color: stickerDto.stickerColor,
+        shape: stickerDto.stickerShape,
+        top: `${stickerDto.stickerTop}%`, // 백엔드에서 Long으로 받았지만 문자열 형태로 변경
+        left: `${stickerDto.stickerLeft}%`, // 백엔드에서 Long으로 받았지만 문자열 형태로 변경
+
+      }));
+      // const convertedStickers = response.data.stickerBoard;
+      // console.log(convertedStickers)
+      // 스티커 상태 설정
+      // console.log(response.data.myStickerCount);
+     setMyStickerCount(response.data.myStickerCount);
+        console.log("count:"+myStickerCount);
+      setStickers(convertedStickers);
+      console.log("get 완료");
+    })
+      .catch(error => {
+        console.error('Error fetching stickers:', error);
+      });
+
+
+      axios.get("http://34.70.229.21:8080/api/sticker/relation", 
+      {headers: {
+              
+               Authorization:getCookie('is_login'),
+             },})  // 예시 URL, 실제 URL로 변경해야 함
+      .then(response => {
+        // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+        console.log(response.data);
+        setMyname(response.data.myName);
+        setMygoal(response.data.myGoal);
+        setMatename(response.data.mateName);
+        setMategoal(response.data.mateGoal);
+        
+        console.log("목표 get 완료");
+      })
+       .catch(error => {
+          console.error('Error fetching stickers:', error);
+        });
+  
+  }, []); 
+
+
   // 스티커 클릭 시 선택된 스티커 상태 업데이트
   const handleStickerClick = (sticker) => {
     setSelectedSticker(sticker);
@@ -113,8 +150,8 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
     // const { shape, color } = getRandomStickerStyle(); // 랜덤한 모양과 색상 선택
     const { shape } = getRandomStickerStyle();
     // 전체 스티커 수가 12개 이상인지 확인
-    if (stickers.length >= 12) {
-      alert("스티커는 최대 12개까지만 생성할 수 있습니다.");
+    if (myStickerCount >= 6) {
+      alert("스티커는 1인당 6개까지만 생성할 수 있습니다!");
       closeModal();
       return;
     }
@@ -175,40 +212,40 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
     const topWithoutPercentage = parseInt(newSticker.top.replace('%', ''));
     const leftWithoutPercentage = parseInt(newSticker.left.replace('%', ''));
     const postVer = {
-      Title : newSticker.text,
+       title : newSticker.text,
        stickerColor : newSticker.color,
         stickerShape : newSticker.shape,
         stickerTop : topWithoutPercentage,
         stickerLeft : leftWithoutPercentage
     }
     console.log(postVer)
-    // axios.post("http://34.70.229.21:8080/api/sticker/create",
-    //   {
-    //     Title : newSticker.text,
-    //    stickerColor : newSticker.color,
-    //     stickerShape : newSticker.shape,
-    //     stickerTop : topWithoutPercentage,
-    //     stickerLeft : leftWithoutPercentage
-    //   },
-    //   {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       Authorization:getCookie('is_login'),
-    //     },
-    //   })
-    //   .then((result) => {
-    //     console.log("res : "+result);
-    //     console.log("스티커등록");
-        
-    //     getCookie("is_login"); 
+    axios.post("http://34.70.229.21:8080/api/sticker/create", 
+    {
+      title : newSticker.text,
+       stickerColor : newSticker.color,
+        stickerShape : newSticker.shape,
+        stickerTop : topWithoutPercentage,
+        stickerLeft : leftWithoutPercentage
+    },
+      {
+        headers: {
+          
+          Authorization:getCookie('is_login'),
+        },
+      })
+      .then((result) => {
+        console.log("res : "+result);
+        console.log("스티커등록");
+        setMyStickerCount(prev => prev+1);
+        getCookie("is_login"); 
       
         
     
-    //   })
-    //   .catch((error) => {
-    //     window.alert('등록 실패');
-    //     console.log(error);
-    //   })      
+      })
+      .catch((error) => {
+        window.alert('등록 실패');
+        console.log(error);
+      })      
     closeModal();
   };
 
@@ -249,10 +286,11 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
     {/* <h2>our sticker board of this week</h2> */}
         <Info style={{ width: backBoxWidth, height: "10vh" }}>
           <span>
-            USER1<goal> {`${goalText} ${firstName}`} </goal>
+            Goal of {myName} : {myGoal} 
           </span>
+          
           <span>
-            USER2<goal> {`${goalText} ${lastName}`} </goal>
+            Goal of {mateName} : {mateGoal}
           </span>
         </Info>
       <BackBox style={{ width: backBoxWidth, height: backBoxHeight }}>
@@ -398,9 +436,9 @@ const Info = styled.div`
      /* transform: translate(-50%, -50%); 가운데 정렬 및 상단 정렬 조정 */
 
  
-  goal {
+  /* goal {
     /* goal 컴포넌트에 대한 스타일 */
-    background: rgba(253, 253, 253, 0.859);
+    /* background: rgba(253, 253, 253, 0.859);
     font-weight: bold;
     width:500px;
     height:110px;
@@ -409,24 +447,41 @@ const Info = styled.div`
     margin-left: 10px;
     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 강조 */
     
-    border: 2px solid darkgrey; /* 테두리 스타일 설정 */
-    padding: 4px; /* 테두리와 요소 내용 사이의 간격 설정 */
+    /* border: 2px solid darkgrey; 테두리 스타일 설정 */
+    /* padding: 4px; 테두리와 요소 내용 사이의 간격 설정 */ 
     /* 기타 원하는 스타일 속성 추가 */
-  }
-  
+  /* } */ 
+
   span {
-    font-size: 20px;
+    font-size: 1.5rem;
   
     /* margin-right: 20%; /* 간격 조절 */
     /* margin-left: 20%; 간격 조절 */ 
-    margin-right: 15%;
-    margin-left: 15%;
+    margin-right: 11%;
+    margin-left: 11%;
     /* margin-top : 1%; */
     /* margin-bottom: 25px; */
     font-weight: bold;
+    /* white-space: nowrap; */
+    border: 2px solid darkgrey; 
+    background: rgba(253, 253, 253, 0.859);
+    color: #69af95;
     text-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); /* 그림자 효과 강조 */
   }
   
 `;
-
+// const Goal = styled.span`
+//   background: rgba(253, 253, 253, 0.859);
+//     font-weight: bold;
+//     /* width:50%;
+//     height:50%; */
+//     white-space: nowrap;
+//     color: #69af95;
+//     /* margin-left: 10px; */
+//     box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1); /* 그림자 효과 강조 */
+//     /* margin-right: 5%; */
+//     border: 2px solid darkgrey; /* 테두리 스타일 설정 */
+//     padding: 4px; /* 테두리와 요소 내용 사이의 간격 설정 */
+//     /* 기타 원하는 스타일 속성 추가 */
+// `
 export default StickerBoard;

@@ -53,6 +53,7 @@ const CenteredContainer = styled.div`
   margin-left: 30vw;
   margin-right: 30vw;
   height:7vh;
+  font-size : 1.3rem;
   margin-bottom:-3.5vh ;
   background-color: rgb(196, 194, 245);
   color:rgb(105, 64, 36);
