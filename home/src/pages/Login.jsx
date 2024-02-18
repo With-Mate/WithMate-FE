@@ -18,7 +18,7 @@ const LoginContainer = styled.div`
   height:60vh;
   margin-top: 10vh;
   margin-bottom: 10vh;
-  background-color:rgb(253, 250, 230);
+  background-color:rgb(252, 252, 233);
 
   border-radius: 30px; 
 
@@ -85,7 +85,7 @@ const Login = () => {
         navigate('/home');
       })
       .catch((error) => {
-        window.alert('로그인 실패! 이미 로그인되어있거나, 아이디/비밀번호가 올바른지 확인하세요');
+        window.alert('로그인 실패! 아이디/비밀번호가 올바른지 확인하세요');
         console.log(error);
       })      
   };

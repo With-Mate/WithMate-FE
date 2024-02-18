@@ -1,6 +1,7 @@
 import Nav from '../components/Nav';
 import styled from 'styled-components';
-import StickerBoard from '../components/StickerBoard';
+// import StickerBoard from '../components/StickerBoard';
+import ProfileBoard from '../components/ProfileBoard';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -16,6 +17,7 @@ const Myprofile= () =>{
   const [signupDate, setSignupdate] = useState(''); //reg(가입일자)
   const [country, setCountry] = useState(''); //reg(가입일자)
   const sliderRef = useRef(null); // useRef로 sliderRef 정의
+  const [journeyIndex,setJourneyIndex] = useState(0);
   useEffect(() => {
     // 컴포넌트가 마운트될 때 데이터 가져오기
     axios.get("http://34.70.229.21:8080/api/self/profile",
@@ -34,6 +36,22 @@ const Myprofile= () =>{
       .catch(error => {
         console.error('Error fetching stickers:', error);
       });
+
+      //몇번째 여정인지 get
+      axios.get("http://34.70.229.21:8080/api/mate/journey",
+      {headers: {
+              
+               Authorization:getCookie('is_login'),
+             },}) 
+      .then(response => {
+        // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+        console.log(response.data);
+        setJourneyIndex(response.data.journeyIndex);
+      })
+        .catch(error => {
+          console.error('n번째 여정 겟 실패:', error);
+        });
+
   }, []);
   const settings = {
     dots: true,
@@ -71,7 +89,7 @@ const Myprofile= () =>{
       <BarWrapper>
           <CustomPrevButton onClick={goToPrevSlide}>&lt;</CustomPrevButton>
           <Journeybar>
-            <span>n번째 여정 보기</span>
+            <span>{journeyIndex}번째 여정 보기</span>
             </Journeybar>
           
             <CustomNextButton onClick={goToNextSlide}>&gt;</CustomNextButton>
@@ -84,44 +102,23 @@ const Myprofile= () =>{
           <StyledSlider {...settings} ref={sliderRef}>
          
           <div>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-         
+          <ProfileBoard backBoxWidth="70vw" backBoxHeight="70vh" weekNum={1}/>
         </div>
 
         <div>
          
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
+          <ProfileBoard backBoxWidth="70vw" backBoxHeight="70vh" weekNum={2}/> 
+          
         </div>
 
         <div>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
+          <ProfileBoard backBoxWidth="70vw" backBoxHeight="70vh" weekNum={3}/> 
+         
           </div>
+
           <div>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
-          <br/>
-          <StickerBoard backBoxWidth="70vw" backBoxHeight="70vh" /> 
+          <ProfileBoard backBoxWidth="70vw" backBoxHeight="70vh" weekNum={4} /> 
+          
           </div>
          
          

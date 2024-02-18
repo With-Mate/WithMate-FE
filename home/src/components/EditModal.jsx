@@ -1,22 +1,56 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import axios from 'axios';
+import { getCookie } from '../cookie';
 
-const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker }) => {
+
+const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
   const [editedText, setEditedText] = useState('');
   const [editedImpression, setEditedImpression] = useState('');
   const [currentColor, setCurrentColor] = useState('');
   const [initialColorGenerated, setInitialColorGenerated] = useState('');
-
+  const [isMine,setIsmine] = useState();
+  const [selectedSticker,setSelectedSticker]=useState({});
+ 
   useEffect(() => {
-    setEditedText(sticker.memo || '');
-    setEditedImpression(sticker.impression || '');
+    console.log(stickerId)
+    axios.get(`http://34.70.229.21:8080/api/sticker/select?id=${stickerId}`, 
+    // {params: { id: stickerId}},
+    {headers :   {  Authorization:getCookie('is_login')}}
+     )
+     .then(response => {
+      // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+      console.log(response.data);
+      setEditedText(response.data.content);
+      setEditedImpression(response.data.impression);
+      console.log(response.data.isMine);
+      setIsmine(response.data.isMine);
+      console.log(isMine)
+      setSelectedSticker(prevState => ({
+        ...prevState, // 이전 상태를 복사
+        title : response.data.title,
+        content : response.data.content,
+        impression : response.data.impression,
+        stickerColor : response.data.stickerColor,
+      }));
+      console.log("목표 get 완료");
+    })
+     .catch(error => {
+        console.error('편집화면 get 실패:', error);
+      });
 
+    // setEditedText(sticker.memo || '');
+    // setEditedImpression(sticker.impression || '');
+      if(isMine===false){
+        alert("메이트의 스티커는 편집할 수 없습니다");
+        onClose();
+      }
     // 초기 색상 설정
     setCurrentColor(sticker.color || 'white');
     setInitialColorGenerated(sticker.color || 'white'); // 초기 색상을 설정
 
-  }, [isOpen, sticker]);
+  }, [isOpen, sticker,stickerId,isMine]);
 
   const handleSave = () => {
     const updatedSticker = {
@@ -26,12 +60,51 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker }) => {
       color: currentColor,
     };
     onUpdateSticker(updatedSticker);
+    console.log("제출된값:"+editedImpression);
+    axios.patch("http://34.70.229.21:8080/api/sticker/edit", 
+    {
+      id : stickerId,
+    title : selectedSticker.title,
+  content   : editedText,
+  impression: editedImpression,
+  stickerColor:currentColor,
+    },
+    // {params: { id: stickerId}},
+    {headers :   {  Authorization:getCookie('is_login')}}
+     )
+     .then(response => {
+      // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+      // console.log(response.data);
+      // setEditedText(response.data.content);
+      // setEditedImpression(response.data.impression);
+      // console.log(response.data.isMine);
+      // setIsmine(response.data.isMine);
+      // console.log(isMine)
+      console.log(response);
+      
+      console.log("메모 patch 완료");
+    })
+     .catch(error => {
+        console.error('메모 patch 실패:', error);
+      });
     onClose();
   };
 
+
+  const handleEdit = (event) => {
+    const memo = event.target.value;
+    console.log("새 메모 : "+memo);
+    setEditedText(memo);
+  }
   const handleImpressionChange = (event) => {
     const impression = event.target.value;
+    console.log("imp:"+impression);
     setEditedImpression(impression);
+    console.log("새 느낀점 : "+editedImpression);
+    
+    console.log(event.target.value);
+    
+    // console.log("새 느낀점 : "+editedImpression);
 
     // 느낀 점이 처음 입력될 때만 색상 변경
     if (impression && initialColorGenerated === 'white') {
@@ -40,7 +113,31 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker }) => {
       setInitialColorGenerated(randomColor); // 랜덤 색상으로 업데이트
     }
   };
+const handleDelete =()=>{
+  console.log(stickerId);
+  axios.delete(`http://34.70.229.21:8080/api/sticker/delete?id=${stickerId}`, 
+  {headers :   {  Authorization:getCookie('is_login')}})
+  .then(response => {
+    // 백엔드에서 받은 데이터를 스티커 객체로 변환하여 세팅
+    // console.log(response.data);
+    // setEditedText(response.data.content);
+    // setEditedImpression(response.data.impression);
+    // console.log(response.data.isMine);
+    // setIsmine(response.data.isMine);
+    // console.log(isMine)
+    console.log(response);
+    
+    console.log("스티커 delete 완료");
+    
+    onClose();
+     window.location.reload();
 
+  })
+   .catch(error => {
+      console.error('스티커 delete 실패:', error);
+    });
+
+}
   const colors = [
     "rgb(245, 195, 195)",
     "rgb(150, 209, 192)",
@@ -61,16 +158,17 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker }) => {
             <Textarea
               placeholder="Enter your memo here..."
               value={editedText}
-              onChange={(event) => setEditedText(event.target.value)}
+              onChange={handleEdit}
             />
             <Textarea
-              placeholder="Enter your impression here..."
+              placeholder="Enter your impression here...Once you register what you feel, you can modify it, but you can't initialize it to a blank"
               value={editedImpression}
               onChange={handleImpressionChange}
             />
             <ButtonContainer>
-              <CancelButton onClick={onClose}>Cancel</CancelButton>
-              <SaveButton onClick={handleSave}>Save</SaveButton>
+              <SaveButton onClick={handleSave} >Save</SaveButton>
+              <DeleteButton onClick={handleDelete}>delete</DeleteButton>
+              {/* <button>d</button> */}
             </ButtonContainer>
           </ModalContent>
         </ModalBackground>
@@ -84,6 +182,7 @@ EditModal.propTypes = {
   onClose: PropTypes.func.isRequired,
   sticker: PropTypes.object.isRequired,
   onUpdateSticker: PropTypes.func.isRequired,
+  stickerId : PropTypes.number.isRequired,
 };
 
 const ModalBackground = styled.div`
@@ -116,23 +215,33 @@ const Textarea = styled.textarea`
 
 const ButtonContainer = styled.div`
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: right; */
+  display: flex-end;
+  /* background-color: pink; */
+  width: 100%;
+  height: 50%;
   margin-top: 10px;
+  
 `;
 
 const Button = styled.button`
-  margin-left: 10px;
-  padding: 5px 10px;
+  /* margin-left: 10vw;
+  margin-right: 10vw; */
+  /* padding: 5px 10px; */
   cursor: pointer;
 `;
 
-const CancelButton = styled(Button)`
-  background-color: #ccc;
+const DeleteButton = styled(Button)`
+  background-color: black;
+  color:black;
+  margin-left:5vw ;
+  
 `;
 
 const SaveButton = styled(Button)`
   background-color: #007bff;
-  color: white;
+  color: black;
+  margin-right: 10vw;
 `;
 
 export default EditModal;
