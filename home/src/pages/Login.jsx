@@ -57,7 +57,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); 
   
-  
+
   const onSubmitHandler = (event) => {
     event.preventDefault();
     
@@ -80,24 +80,42 @@ const Login = () => {
         setCookie("is_login", `${accessToken}`); 
         console.log("token : "+accessToken);
         window.alert('로그인 성공!');
-        navigate('/home');
-      })
+        
+        axios.get("http://34.70.229.21:8080/api/match")
+        .then((response) => {
+          const statusCode = response.status;
+          const matchInfo = response.data;
+
+          if (statusCode === 400) {
+            navigate('/home');
+          } else if (statusCode === 204) {
+            navigate('/matchmate');
+          } else if  (statusCode === 200 && matchInfo.goal && matchInfo.category) {
+            navigate('/');
+            //페이지 만들기
+          } 
+        })
+        .catch((error) => {
+          // 에러 처리
+          console.log(error);
+        });
+    })
       .catch((error) => {
         window.alert('로그인 실패');
         console.log(error);
       })      
   };
- 
+
 
   return (
 
     <>
-   <Nav/>
+    <Nav/>
     <LoginContainer>
       <h2>WithMate</h2>
       <form onSubmit={onSubmitHandler} >
       <Input
-         id="username"
+          id="username"
           type="text"
           placeholder="ID"
           value={username}
@@ -105,13 +123,13 @@ const Login = () => {
           required
         />
       <Input
-       id = "password"
+        id = "password"
         type="password"
         placeholder="Password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-     <Button type="submit">Log In</Button>
+      <Button type="submit">Log In</Button>
       </form>
     </LoginContainer>
     </>

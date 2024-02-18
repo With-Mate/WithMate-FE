@@ -28,11 +28,6 @@ const Givemessage = () => {
     setShowDropdown(!showDropdown);
   };
 
-  // const handleDropdownChange = (event) => {
-  //   const selectedMessage = event.target.value;
-  //   setSelectedMessage(selectedMessage);
-  //   setShowDropdown(false);
-  // };
   const handleDropdownChange = async (event) => {
     const selectedMessage = event.target.value;
     setSelectedMessage(selectedMessage);

@@ -2,8 +2,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import ReportModal from './ReportModal';
-import {getCookie} from '../cookie';
-import axios from 'axios';
+// import {getCookie} from '../cookie';
+// import axios from 'axios';
 
 const ReportBox = () => {
   const [reportContent, setReportContent] = useState('');
@@ -14,7 +14,7 @@ const ReportBox = () => {
 
   };
 
-  const handleReportSubmit = async () => {
+  const handleReportSubmit= () => {
     if (reportContent.length < 1) {
       alert('Please provide at least 1 word for the report.');
       return;
@@ -23,25 +23,25 @@ const ReportBox = () => {
     setReportContent(''); 
 
     console.log('Report submitted', reportContent);
-    try {
-      const result = await axios.post(
-        "http://34.70.229.21:8080/api/mate/report",
-        {
-        // post할 내용 적기 -404 오류 원인추측
-        },
-        {
-          headers: {
-            Authorization:getCookie('is_login'),
-            'Content-Type': 'application/json',
-          },
+    // try {
+    //   const result = await axios.post(
+    //     "http://34.70.229.21:8080/api/mate/report",
+    //     {
+    //     // post할 내용 적기 -404 오류 원인추측
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization:getCookie('is_login'),
+    //         'Content-Type': 'application/json',
+    //       },
           
-        }
-      );
-      console.log('Response:',result);
-      console.log('신고 내용 보내기Success');
-    } catch (error) {
-      console.error(error);
-    }
+    //     }
+    //   );
+    //   console.log('Response:',result);
+    //   console.log('신고 내용 보내기Success');
+    // } catch (error) {
+    //   console.error(error);
+    // }
     setModalIsOpen(true); // 모달 열기
   };
 

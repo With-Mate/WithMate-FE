@@ -4,7 +4,6 @@ import EncouragementBox from '../components/EncouragementBox';
 import EncouragementBox2 from '../components/EncouragementBox2';
 import MyGoal from '../components/MyGoal';
 import MateGoal from '../components/MateGoal';
-import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -38,7 +37,6 @@ const Home = () => {
         </ImageContainer>
       
       </Main>
-      <Link to="/start">start </Link>
 
     </>
   );

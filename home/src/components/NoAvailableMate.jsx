@@ -6,9 +6,6 @@ import PropTypes from 'prop-types';
 
 function NoAvailablemate({goal,selectedCategory}) {
     const handleWaitButtonClick = async () => {
-      console.log("My Goal:", goal);
-      console.log("Selected category:", selectedCategory);
-      console.log(getCookie('is_login'))
       try {
         const result = await axios.post(
           "http://34.70.229.21:8080/api/match/register",
@@ -25,7 +22,7 @@ function NoAvailablemate({goal,selectedCategory}) {
           }
         );
         console.log('Response:',result);
-        console.log('Success');
+        console.log('goal,category,wait 성공 ');
       } catch (error) {
         console.error(error);
       }

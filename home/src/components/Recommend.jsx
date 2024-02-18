@@ -1,23 +1,21 @@
-
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
- import MateProfile from './Mateprofile';
 import {getCookie} from '../cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 function Recommend({ goal, selectedCategory }) {
+  const [data, setData] = useState(null);
   const handleSelectButtonClick = async () => {
-    
-    
       console.log("My Goal:", goal);
       console.log("Selected category:", selectedCategory);
       console.log(getCookie('is_login'))
-  
       try {
         const result = await axios.post(
           "http://34.70.229.21:8080/api/match/relate",
           {
             goal: goal,
             category : selectedCategory,
+            //메이트에 대한 관계 body에 추가되어야할듯 
           },
           {
             headers: {
@@ -28,12 +26,37 @@ function Recommend({ goal, selectedCategory }) {
           }
         );
         console.log('Response:',result);
-        console.log('Success');
+        console.log('메이트 매칭 성공');
       } catch (error) {
         console.error(error);
       }
     };
     
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://34.70.229.21:8080/api/match/people?category="+selectedCategory,
+          {
+            headers: {
+              Authorization:getCookie('is_login'),
+              'Content-Type': 'application/json',
+            },
+            // params: {
+            //   category: selectedCategory, // 쿼리 파라미터 추가
+            // },
+          }
+        );
+
+        console.log('카테고리같은 추천메이트:', response);
+        setData(response.data); // 받은 데이터를 상태에 저장
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData(); // 함수 실행
+  }, [selectedCategory]);
   return (
     <>
       <h3
@@ -49,15 +72,18 @@ function Recommend({ goal, selectedCategory }) {
           backgroundColor: 'rgb(252, 246, 246)',
         }}
       >
-        There are matching mates available right now
+        There is matching mate available right now
       </h3>
       <br />
-
-      
-        <ProfileCard >
-         <MateProfile/>
-         {/* <Recmate/> */}
+      {data && (
+        <ProfileCard>
+          {/* data를 사용하여 화면에 표시 */}
+          <p>Nickname: {data.nickname}</p>
+          <p>Goal: {data.goal}</p>
+          <p>Category: {data.category}</p>
+          <p>Country: {data.country}</p>
         </ProfileCard>
+      )}
         <div
         style={{
           fontSize: '2vw',
