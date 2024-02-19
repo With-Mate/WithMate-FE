@@ -7,53 +7,53 @@ import useDetectClose from '../components/UseDetectClose';
 import axios from 'axios';
 import { getCookie } from '../cookie';
 const MatchMate = () => {
-
+  const [nickname,setnickname]=useState('');
+  const[iscategorybuttonclicked,setiscategorybuttonclicked]=useState(false);
   const [isMatchButtonClicked,setIsMatchButtonClicked] = useState(false);
   const scrollRef = useRef(null);
   const [goal, setGoal] = useState('');
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
-  const [selectedCategory, setSelectedCategory] = useState("CHOOSE YOUR CATEGORY");
-  
-  const [hasMate, setHasMate] = useState(false); 
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const handleEnterButtonClick =()=>{
   setIsMatchButtonClicked(true);
     }
-
-  const handleCategorySelect = (category) => {
+  const handleCategoryButtonClick=()=>{
+    setiscategorybuttonclicked(true);
+    fetchData();
+  } 
+  const handleCategorySelect = async (category) => {
     setSelectedCategory(category);
     myPageHandler(); 
+   
     };
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://34.70.229.21:8080/api/match/people?category="+selectedCategory,
+          "http://34.70.229.21:8080/api/match/person?category="+selectedCategory,
           {
             headers: {
               Authorization: getCookie('is_login'),
               'Content-Type': 'application/json',
             },
-          
           }
         );
+        const nickname = response.data;
+        setnickname(nickname?.nickname);
 
-        const { nickname, goal, category, country } = response.data;
-        console.log(nickname)
-
-        // 받은 데이터가 하나라도 undefined이면 hasMate를 false로, 그렇지 않으면 true로 설정
-        setHasMate(!(nickname === undefined || goal === undefined || category === undefined || country === undefined));
       } catch (error) {
-        console.error('추천리스트 받아오기실패');
-        setHasMate(false);  // API 호출에 실패하면 hasMate를 false로 설정
+        console.error('추천메이트 받아오기실패');
       }
     };
-    fetchData();
-    if (isMatchButtonClicked && scrollRef.current) {
+    console.log('목표:',selectedCategory);
+    console.log("메이트 이름:",nickname)
+  useEffect(() => {
+    
+    if (isMatchButtonClicked && iscategorybuttonclicked&& scrollRef.current) {
       const { top } = scrollRef.current.getBoundingClientRect();
-
       window.scrollTo({ top: window.scrollY + top + 500, behavior: 'smooth' });
     }
-  }, [selectedCategory, isMatchButtonClicked]);
+    
+  }, [selectedCategory, isMatchButtonClicked, iscategorybuttonclicked]);
 
   return (
     <>
@@ -113,7 +113,7 @@ const MatchMate = () => {
             <Wrapper>
               <DropdownContainer>
                 <DropdownButton onClick={myPageHandler} ref={myPageRef}>
-                  {selectedCategory}
+                  {selectedCategory||"choose your category"}
                 </DropdownButton>
                 <Menu isdropped={myPageIsOpen ? 'true' : undefined}>
                   <Ul>
@@ -136,9 +136,23 @@ const MatchMate = () => {
                 </Menu>
               </DropdownContainer>
             </Wrapper>
-            
+            </form>
+            <button
+              onClick={handleCategoryButtonClick}
+              style={{
+                textDecoration: 'none',
+                padding: '0.5vw',
+                backgroundColor: 'rgb(186, 173, 151)',
+                fontSize: '1.2vw',
+                color: 'rgb(248, 248, 248)',
+                // fontWeight: 'bold',
+                // borderRadius: '1vh',
+                position: 'absolute',
+                left: '47.2vw',
+                top: '80vh'}}
+                > save </button>
       
-          </form>
+        
         </Mycontent>
       </div>
       <button
@@ -152,19 +166,16 @@ const MatchMate = () => {
           fontWeight: 'bold',
           borderRadius: '1vh',
           position: 'absolute',
-          left: '41vw',
+          left: '41.5vw',
           top: '86vh',
         }}
       >
         Match Mate
       </button>
-
-      {isMatchButtonClicked && hasMate ? <Recommend goal={goal} selectedCategory={selectedCategory} /> : null}
-      {!isMatchButtonClicked ? null : hasMate ? null : <NoAvailablemate goal={goal} selectedCategory={selectedCategory} />}
+      {isMatchButtonClicked && nickname!==undefined ? (<Recommend goal={goal} selectedCategory={selectedCategory} />) : null}
+      {!isMatchButtonClicked ? null : nickname!==undefined  ? null : (<NoAvailablemate goal={goal} selectedCategory={selectedCategory} />)}
     </>
-    
   );
-
 }
 const Mycontent = styled.div`
   background-color: #faf5eb;

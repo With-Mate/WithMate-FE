@@ -12,7 +12,7 @@ const Home = () => {
         <Nav/>
       </header>
       <h2 style={{
-        fontSize: '3rem', 
+        fontSize: '3vw', 
         padding: '1.875rem', 
         fontStyle: 'italic',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',

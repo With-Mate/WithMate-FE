@@ -46,12 +46,11 @@ useEffect(() => {
         <h4 style={{position:'absolute',left:'25vw',top:'40vh',padding:'0.5vw',fontSize:'1.5vw'}}> With Mate</h4>
         <h4 style={{position:'absolute', right:'30vw', top:'40vh', padding:'0.5vw',fontSize:'1.5vw'}} > {startDate}</h4>
         <h4 style={{position:'absolute', left:'25vw',top:'55vh',padding:'0.5vw',fontSize:'1.5vw'}}> Mate Encouragement Message</h4>
-        <h4 style={{position:'absolute', right:'30vw', top:'55vh', padding:'0.5vw',fontSize:'1.5vw'}} > {mateMessage}</h4>
+        <h4 style={{position:'absolute', right:'15vw', top:'55vh', padding:'0.5vw',fontSize:'1.5vw'}} > {mateMessage}</h4>
         <h4 style={{position:'absolute', left:'25vw',top:'70vh',padding:'0.5vw',fontSize:'1.5vw'}}> My Encouragement Message</h4>
         <h4 style={{position:'absolute', right:'20vw', top:'70vh', padding:'0.5vw',fontSize:'1.5vw'}} > <Givemessage/> </h4>
         </DataContainer>
         <Link to="/Report" style={{textDecoration: 'none'}} ><RePort>REPORT </RePort></Link>
-        <Link to="/mate">mate match </Link>
         </>
     )
 }

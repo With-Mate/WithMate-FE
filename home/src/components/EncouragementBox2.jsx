@@ -37,7 +37,7 @@ font-size: 1.5vw;
 font-weight: bold;
 position: absolute;
 top: 28vh; 
-right: 25vh; 
+right: 12vh; 
 background-color: rgb(245, 245, 245);
 border: 2px solid lightgrey;
 padding: 2vw; 

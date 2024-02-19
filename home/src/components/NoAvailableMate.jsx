@@ -3,9 +3,11 @@ import styled from 'styled-components';
 import axios from 'axios';
 import {getCookie} from '../cookie';
 import PropTypes from 'prop-types';
+import {Link } from 'react-router-dom';
 
 function NoAvailablemate({goal,selectedCategory}) {
     const handleWaitButtonClick = async () => {
+      window.alert("메이트 기다리기를 눌렀습니다")
       try {
         const result = await axios.post(
           "http://34.70.229.21:8080/api/match/register",
@@ -46,7 +48,7 @@ return (
 <br/>
 <br/>
 
-<Wait onClick={handleWaitButtonClick}> WAIT FOR MATE</Wait>
+<Link to="/" style={{textDecoration: 'none'}} onClick={handleWaitButtonClick}> <Wait>WAIT FOR MATE</Wait></Link>
 </div>
 </>
 )

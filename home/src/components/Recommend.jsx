@@ -3,19 +3,44 @@ import styled from 'styled-components';
 import {getCookie} from '../cookie';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import {Link } from 'react-router-dom';
+
 function Recommend({ goal, selectedCategory }) {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "http://34.70.229.21:8080/api/match/person?category="+selectedCategory,
+        {
+          headers: {
+            Authorization:getCookie('is_login'),
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+     
+
+    setData(response.data);
+    console.log('추천메이트:', response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchData(); 
+  }, [selectedCategory]);
   const handleSelectButtonClick = async () => {
       console.log("My Goal:", goal);
       console.log("Selected category:", selectedCategory);
       console.log(getCookie('is_login'))
+      window.alert("매칭을 성공하였습니다");
       try {
         const result = await axios.post(
           "http://34.70.229.21:8080/api/match/relate",
           {
             goal: goal,
             category : selectedCategory,
-            //메이트에 대한 관계 body에 추가되어야할듯 
           },
           {
             headers: {
@@ -30,72 +55,63 @@ function Recommend({ goal, selectedCategory }) {
       } catch (error) {
         console.error(error);
       }
+      
     };
-    
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://34.70.229.21:8080/api/match/people?category="+selectedCategory,
-          {
-            headers: {
-              Authorization:getCookie('is_login'),
-              'Content-Type': 'application/json',
-            },
-            // params: {
-            //   category: selectedCategory, // 쿼리 파라미터 추가
-            // },
-          }
-        );
-
-        console.log('카테고리같은 추천메이트:', response);
-        setData(response.data); // 받은 데이터를 상태에 저장
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData(); // 함수 실행
-  }, [selectedCategory]);
   return (
+    
     <>
       <h3
         style={{
-          fontSize: '25px',
+          fontSize: '2vw',
           display: 'inline-block',
           padding: '40px',
           position: 'relative',
-          left: '35vw',
+          left: '30vw',
           letterSpacing: '2x',
           borderRadius: '20px',
           fontFamily: 'Poor Story, sans-serif',
-          backgroundColor: 'rgb(252, 246, 246)',
+          backgroundColor: 'rgb(255, 255, 255)',
         }}
       >
         There is matching mate available right now
       </h3>
       <br />
-      {data && (
-        <ProfileCard>
-          {/* data를 사용하여 화면에 표시 */}
-          <p>Nickname: {data.nickname}</p>
-          <p>Goal: {data.goal}</p>
-          <p>Category: {data.category}</p>
-          <p>Country: {data.country}</p>
-        </ProfileCard>
-      )}
-        <div
-        style={{
-          fontSize: '2vw',
-          letterSpacing: '1px',
-          fontFamily: 'Poor Story, sans-serif',
-          position: 'relative',
-          left: '40vw',
-        }}
-      >
-        Period: 4 weeks (28 days)
-      </div>
-      <Selectmate onClick={handleSelectButtonClick}> SELECT</Selectmate>
+      
+        <span style={{
+            fontSize: '2vw',
+            letterSpacing: '1px',
+            fontFamily: 'Poor Story, sans-serif',
+            position: 'relative',
+            fontWeight:'bold',
+            padding:'1vw',
+            left:'42vw',
+            top:'-18vh',
+            borderRadius:'1vw',
+            backgroundColor:'rgb(228, 237, 198)'
+            }}>Mate profile</span>
+            <ProfileCard >
+          <div style={{
+            letterSpacing: '1px',
+            fontFamily: 'Poor Story, sans-serif',
+            
+            
+          }}>Nickname:   {data?.nickname}</div>
+          <div style={{
+            letterSpacing: '1px',
+            fontFamily: 'Poor Story, sans-serif'
+          }}
+          >goal:   {data?.goal}</div>
+          <div style={{
+            letterSpacing: '1px',
+            fontFamily: 'Poor Story, sans-serif'
+          }}>category:  {data?.category}</div>
+          <div style={{
+            letterSpacing: '1px',
+            fontFamily: 'Poor Story, sans-serif'
+          }}>country:  {data?.country}</div>
+      </ProfileCard>
+      <Link to="/home" style ={{textDecoration: 'none',}} onClick={handleSelectButtonClick}> <Selectmate> SELECT</Selectmate></Link>
+      
     </>
   );
 }
@@ -106,21 +122,30 @@ Recommend.propTypes = {
 export default Recommend;
 
 const ProfileCard = styled.div`
-  padding: 20px;
-  
+  padding: 2vw;
   border-radius: 10px;
+  font-size: 2vw;
   display: inline-block;
   position: relative;
-  left:35vw;
+  margin:1vw;
+  left:26.2vw;
+  top:6vh;
+  letter-spacing: '1px';
+  font-family: 'Poor Story, sans-serif';
+  background-color: #f8f8e5;
 `;
 
 const Selectmate=styled.button`
-     padding:30px;
-     font-size: 30px;
-     background-color: beige;
-     margin:30px;
-     position:relative;
-     display:flex;
-     left:42vw;
+      padding:30px;
+      font-size: 30px;
+      
+      border-radius: 1vw;
+      background-color:rgb(252, 246, 246);
+      margin:30px;
+      position:relative;
+      display:flex;
+      left:42vw;
+      top:5vh;
+      
     
 `

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../cookie';
 import Nav from "../components/Nav";
-
+import { getCookie } from '../cookie';
 // const url = import.meta.env.VITE_LoginAPI_URL;
 
 const LoginContainer = styled.div`
@@ -81,23 +81,29 @@ const Login = () => {
         console.log("token : "+accessToken);
         window.alert('로그인 성공!');
         
-        axios.get("http://34.70.229.21:8080/api/match")
+        axios.get("http://34.70.229.21:8080/api/match",
+        {
+          headers: {
+            Authorization: getCookie("is_login"),
+            'Content-Type': 'application/json',
+          },
+        })
         .then((response) => {
           const statusCode = response.status;
-          const matchInfo = response.data;
-
-          if (statusCode === 400) {
+          // const matchInfo = response.data;
+          if (statusCode === 204) {
+            console.log("메이트 없음");
+            navigate('/mate');
+          } else if  (statusCode === 200 ) {
+            console.log("매칭 대기상태");
+            window.alert("메이트를 기다리는 중입니다")
             navigate('/home');
-          } else if (statusCode === 204) {
-            navigate('/matchmate');
-          } else if  (statusCode === 200 && matchInfo.goal && matchInfo.category) {
-            navigate('/');
             //페이지 만들기
           } 
         })
-        .catch((error) => {
-          // 에러 처리
-          console.log(error);
+        .catch(() => {
+          console.log("매칭 되어있음");
+          navigate('/home');
         });
     })
       .catch((error) => {
@@ -108,7 +114,6 @@ const Login = () => {
 
 
   return (
-
     <>
     <Nav/>
     <LoginContainer>
