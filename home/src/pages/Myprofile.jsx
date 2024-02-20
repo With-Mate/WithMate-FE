@@ -126,7 +126,15 @@ const Myprofile= () =>{
 
           </StyledSlider>
         </SlideWrapper>
-        
+        <br/><br/>
+        <footer style={{textAlign:'center'}}>
+      <hr />
+      Designed by Freepik / Author : upklyak 
+      <br/>
+      profile image Link : https://www.freepik.com/free-vector/avatars-set-with-people-face-social-media-profile-app-vector-flat-collection-men-women-heads-circle-frame-female-male-characters-portraits-with-different-hairstyle_22445017.htm#query=profile&position=1&from_view=search&track=sph&uuid=e9620d58-ea32-454e-8ecf-c6e5251ec8fc
+      <br/><br/>
+      image Link : https://kr.freepik.com/free-vector/couple-runners-jogging-together-in-park_22393901.htm#query=upklyak%20%EA%B3%B5%EC%9B%90%EC%97%90%EC%84%9C%20%EC%A1%B0%EA%B9%85%ED%95%98%EB%8A%94%20%EC%BB%A4%ED%94%8C&position=15&from_view=search&track=ais&uuid=5d35c0bb-0655-4cfc-ab43-3a5d5859e5fc
+      </footer>
         </>
       )
 }

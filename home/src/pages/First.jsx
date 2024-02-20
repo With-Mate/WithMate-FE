@@ -4,6 +4,10 @@ import { Link } from 'react-router-dom';
 
 
 const First = () => {
+  // const goToLink = () => {
+  //   window.location.href ='https://kr.freepik.com/free-vector/couple-runners-jogging-together-in-park_22393901.htm#from_view=detail_alsolike';
+  // };
+
   return (
     <>
       <Nav />
@@ -75,10 +79,19 @@ Success or failure doesn&apos;t matter.{'\n\n'} Let&apos;s focus on what we lear
     <span>Let&apos;s color the sticker board with your mate</span>
     <span>You can view the sticker board for each week you decorated this month on my profile page</span>
     <br/>
-    <img style={{width:"50vw"}}src="goalcolor.png" alt="goal edit image" />
+    <img style={{width:"50vw"}}src="goalres.png" alt="goal edit image" />
     <br/>
     </div>
       </PageContent>
+
+      <br/>
+      <br/>
+      <footer style={{textAlign:'center'}}>
+      <hr />
+      Designed by Freepik / Author : upklyak 
+      <br/>
+      Link : https://kr.freepik.com/free-vector/couple-runners-jogging-together-in-park_22393901.htm#query=upklyak%20%EA%B3%B5%EC%9B%90%EC%97%90%EC%84%9C%20%EC%A1%B0%EA%B9%85%ED%95%98%EB%8A%94%20%EC%BB%A4%ED%94%8C&position=15&from_view=search&track=ais&uuid=5d35c0bb-0655-4cfc-ab43-3a5d5859e5fc
+      </footer>
     </>
   );
 }
