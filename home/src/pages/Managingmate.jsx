@@ -51,6 +51,12 @@ useEffect(() => {
         <h4 style={{position:'absolute', right:'20vw', top:'70vh', padding:'0.5vw',fontSize:'1.5vw'}} > <Givemessage/> </h4>
         </DataContainer>
         <Link to="/Report" style={{textDecoration: 'none'}} ><RePort>REPORT </RePort></Link>
+        <Footer>
+        <hr/>
+        license : Author upklyak Source Freepik
+        </Footer>
+       <Link to='/home'>home</Link>
+
         </>
     )
 }
@@ -75,3 +81,16 @@ const Mateprofilecontainer=styled.div`
     left:22vw;
     position:relative;
 `
+
+const Footer = styled.footer`
+
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    bottom:-48vh;
+
+    hr {
+    border: 1px solid lightgrey;
+
+    }
+`;

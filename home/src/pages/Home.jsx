@@ -37,7 +37,10 @@ const Home = () => {
         </ImageContainer>
       
       </Main>
-
+      <Footer>
+        <hr/>
+        license : Author upklyak Source Freepik
+        </Footer>
     </>
   );
 }
@@ -51,3 +54,16 @@ const Main = styled.div`
 const ImageContainer = styled.div`
   
 `
+
+const Footer = styled.footer`
+
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    bottom:-8vh;
+
+    hr {
+    border: 1px solid lightgrey;
+
+    }
+`;

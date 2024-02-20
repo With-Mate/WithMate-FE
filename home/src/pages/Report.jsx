@@ -15,7 +15,10 @@ const Report= () =>{
         <ProfileContainer><MateProfile/></ProfileContainer>
         <h4 style={{position:'absolute',right:'17vw',top:'20vh',padding:'0.5vw',fontSize:'2vw'}}> Would you like to report this person?</h4>
         <ReportBox onOpenModal={handleOpenModal} />
-
+        <Footer>
+        <hr/>
+        license : Author upklyak Source Freepik
+        </Footer>
 
 
         </>
@@ -26,3 +29,16 @@ const ProfileContainer= styled.div`
     position:relative;
     left:20vw;
 `
+
+const Footer = styled.footer`
+
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    bottom:-11vh;
+
+    hr {
+    border: 1px solid lightgrey;
+
+    }
+`;
