@@ -4,7 +4,6 @@ import EncouragementBox from '../components/EncouragementBox';
 import EncouragementBox2 from '../components/EncouragementBox2';
 import MyGoal from '../components/MyGoal';
 import MateGoal from '../components/MateGoal';
-import { Link } from 'react-router-dom';
 
 const Home = () => {
   return (
@@ -13,7 +12,7 @@ const Home = () => {
         <Nav/>
       </header>
       <h2 style={{
-        fontSize: '3rem', 
+        fontSize: '3vw', 
         padding: '1.875rem', 
         fontStyle: 'italic',
         textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)',
@@ -31,7 +30,7 @@ const Home = () => {
           borderRadius: '40%',
           boxShadow: '5px 5px 20px rgba(0, 0, 0, 0.2)'
           }}/>
-          <EncouragementBox />
+          <EncouragementBox/>
           <EncouragementBox2/>
           <MyGoal/>
           <MateGoal/>
@@ -59,3 +58,16 @@ const Main = styled.div`
 const ImageContainer = styled.div`
   
 `
+
+const Footer = styled.footer`
+
+    width: 100vw;
+    text-align: center;
+    position: relative;
+    bottom:-8vh;
+
+    hr {
+    border: 1px solid lightgrey;
+
+    }
+`;

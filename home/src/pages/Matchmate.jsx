@@ -3,63 +3,57 @@ import Nav from '../components/Nav';
 import NoAvailablemate from '../components/NoAvailableMate';
 import styled, { css } from 'styled-components';
 import Recommend from '../components/Recommend';
-import axios from 'axios';
 import useDetectClose from '../components/UseDetectClose';
-import {getCookie} from '../cookie';
-// import cookie from '../cookie';
-// const url =import.meta.env.VITE_Match_URL;
-
+import axios from 'axios';
+import { getCookie } from '../cookie';
 const MatchMate = () => {
+  const [nickname,setnickname]=useState('');
+  const[iscategorybuttonclicked,setiscategorybuttonclicked]=useState(false);
   const [isMatchButtonClicked,setIsMatchButtonClicked] = useState(false);
-  const hasAvailableMate = true;
   const scrollRef = useRef(null);
   const [goal, setGoal] = useState('');
   const [myPageIsOpen, myPageRef, myPageHandler] = useDetectClose(false);
-  const [selectedCategory, setSelectedCategory] = useState("CHOOSE YOUR CATEGORY");
-
-  
-  const handleEnterButtonClick = async () => {
-    console.log("My Goal:", goal);
-    console.log("Selected category:", selectedCategory);
-    setIsMatchButtonClicked(true);
-    console.log(getCookie('is_login'))
-
-    try {
-      const result = await axios.post(
-        "http://34.70.229.21:8080/api/match/register",
-        {
-          goal: goal,
-          category : selectedCategory,
-        },
-        {
-          headers: {
-            Authorization:getCookie('is_login'),
-            'Content-Type': 'application/json',
-          },
-          
-        }
-      );
-      console.log('Response:',result);
-      console.log('Success');
-    } catch (error) {
-      console.error(error);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const handleEnterButtonClick =()=>{
+  setIsMatchButtonClicked(true);
     }
-  };
-  
-
-
-const handleCategorySelect = (category) => {
+  const handleCategoryButtonClick=()=>{
+    setiscategorybuttonclicked(true);
+    fetchData();
+  } 
+  const handleCategorySelect = async (category) => {
     setSelectedCategory(category);
     myPageHandler(); 
-};
+   
+    };
+  const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://34.70.229.21:8080/api/match/person?category="+selectedCategory,
+          {
+            headers: {
+              Authorization: getCookie('is_login'),
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        const nickname = response.data;
+        setnickname(nickname?.nickname);
 
+      } catch (error) {
+        console.error('추천메이트 받아오기실패');
+      }
+    };
+    console.log('목표:',selectedCategory);
+    console.log("메이트 이름:",nickname)
   useEffect(() => {
-    if (isMatchButtonClicked && scrollRef.current) {
+    
+    if (isMatchButtonClicked && iscategorybuttonclicked&& scrollRef.current) {
       const { top } = scrollRef.current.getBoundingClientRect();
-
       window.scrollTo({ top: window.scrollY + top + 500, behavior: 'smooth' });
     }
-  }, [isMatchButtonClicked]);
+    
+  }, [selectedCategory, isMatchButtonClicked, iscategorybuttonclicked]);
 
   return (
     <>
@@ -119,7 +113,7 @@ const handleCategorySelect = (category) => {
             <Wrapper>
               <DropdownContainer>
                 <DropdownButton onClick={myPageHandler} ref={myPageRef}>
-                  {selectedCategory}
+                  {selectedCategory||"choose your category"}
                 </DropdownButton>
                 <Menu isdropped={myPageIsOpen ? 'true' : undefined}>
                   <Ul>
@@ -142,9 +136,23 @@ const handleCategorySelect = (category) => {
                 </Menu>
               </DropdownContainer>
             </Wrapper>
-            
+            </form>
+            <button
+              onClick={handleCategoryButtonClick}
+              style={{
+                textDecoration: 'none',
+                padding: '0.5vw',
+                backgroundColor: 'rgb(186, 173, 151)',
+                fontSize: '1.2vw',
+                color: 'rgb(248, 248, 248)',
+                // fontWeight: 'bold',
+                // borderRadius: '1vh',
+                position: 'absolute',
+                left: '47.2vw',
+                top: '80vh'}}
+                > save </button>
       
-          </form>
+        
         </Mycontent>
       </div>
       <button
@@ -158,18 +166,17 @@ const handleCategorySelect = (category) => {
           fontWeight: 'bold',
           borderRadius: '1vh',
           position: 'absolute',
-          left: '41vw',
+          left: '41.5vw',
           top: '86vh',
         }}
       >
         Match Mate
       </button>
-      {isMatchButtonClicked && hasAvailableMate ? <Recommend /> : null}
-      {!isMatchButtonClicked ? null : hasAvailableMate ? null : <NoAvailablemate />}
+      {isMatchButtonClicked && nickname!==undefined ? (<Recommend goal={goal} selectedCategory={selectedCategory} />) : null}
+      {!isMatchButtonClicked ? null : nickname!==undefined  ? null : (<NoAvailablemate goal={goal} selectedCategory={selectedCategory} />)}
     </>
   );
-};
-
+}
 const Mycontent = styled.div`
   background-color: #faf5eb;
   width: 70vw;
@@ -211,7 +218,8 @@ const DropdownContainer = styled.div`
 
 const DropdownButton = styled.div`
 cursor: pointer;
-`;
+`
+
 const Menu = styled.div.attrs(props => ({
     isdropped: props.isdropped ? "true" : undefined,
 }))`
