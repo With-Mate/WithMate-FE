@@ -18,7 +18,7 @@ const LoginContainer = styled.div`
   height:60vh;
   margin-top: 10vh;
   margin-bottom: 10vh;
-  background-color:rgb(253, 250, 230);
+  background-color:rgb(252, 252, 233);
 
   border-radius: 30px; 
 
@@ -74,6 +74,7 @@ const Login = () => {
         },
       })
       .then((result) => {
+        console.log("h : "+result.headers)
         console.log("res : "+result.headers.authorization);
         console.log("login");
         const accessToken = result.headers.authorization;
@@ -84,7 +85,7 @@ const Login = () => {
         navigate('/home');
       })
       .catch((error) => {
-        window.alert('로그인 실패');
+        window.alert('로그인 실패! 아이디/비밀번호가 올바른지 확인하세요');
         console.log(error);
       })      
   };
