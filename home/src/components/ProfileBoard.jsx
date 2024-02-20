@@ -213,7 +213,7 @@ const Sticker = styled.div`
   justify-content: center;
   text-align: center;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 0.9rem;
   color: rgba(72, 53, 49, 0.951);
   background-color: ${(props) => props.color};
   /* font-style: italic; 글자 기울이기 */

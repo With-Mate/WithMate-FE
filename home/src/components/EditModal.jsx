@@ -5,12 +5,12 @@ import axios from 'axios';
 import { getCookie } from '../cookie';
 
 
-const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
+const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId,setMyStickerCount}) => {
   const [editedText, setEditedText] = useState('');
   const [editedImpression, setEditedImpression] = useState('');
   const [currentColor, setCurrentColor] = useState('');
   const [initialColorGenerated, setInitialColorGenerated] = useState('');
-  const [isMine,setIsmine] = useState();
+  // const [isMine,setIsmine] = useState();
   const [selectedSticker,setSelectedSticker]=useState({});
  
   useEffect(() => {
@@ -25,8 +25,10 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
       setEditedText(response.data.content);
       setEditedImpression(response.data.impression);
       console.log(response.data.isMine);
-      setIsmine(response.data.isMine);
-      console.log(isMine)
+      // setIsmine(response.data.isMine);
+     const Mine = response.data.isMine;
+     console.log(Mine)
+      // console.log(isMine)
       setSelectedSticker(prevState => ({
         ...prevState, // 이전 상태를 복사
         title : response.data.title,
@@ -35,6 +37,11 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
         stickerColor : response.data.stickerColor,
       }));
       console.log("목표 get 완료");
+      if(Mine===false){
+        alert("You cannot edit stickers created by your mate");
+        console.log("alert");
+        onClose();
+      }
     })
      .catch(error => {
         console.error('편집화면 get 실패:', error);
@@ -42,16 +49,13 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
 
     // setEditedText(sticker.memo || '');
     // setEditedImpression(sticker.impression || '');
-      if(isMine===false){
-        alert("메이트의 스티커는 편집할 수 없습니다");
-        onClose();
-      }
+  
     // 초기 색상 설정
     setCurrentColor(sticker.color || 'white');
     setInitialColorGenerated(sticker.color || 'white'); // 초기 색상을 설정
 
-  }, [isOpen, sticker,stickerId,isMine]);
-
+  }, []);
+// isOpen, sticker,stickerId,isMine
   const handleSave = () => {
     const updatedSticker = {
       ...sticker,
@@ -107,11 +111,14 @@ const EditModal = ({ isOpen, onClose, sticker, onUpdateSticker, stickerId}) => {
     // console.log("새 느낀점 : "+editedImpression);
 
     // 느낀 점이 처음 입력될 때만 색상 변경
-    if (impression && initialColorGenerated === 'white') {
-      const randomColor = colors[Math.floor(Math.random() * colors.length)];
-      setCurrentColor(randomColor);
-      setInitialColorGenerated(randomColor); // 랜덤 색상으로 업데이트
-    }
+   
+      // 느낀 점이 처음 입력될 때만 색상 변경
+      if (impression.length > 0 && initialColorGenerated === 'white') {
+          const randomColor = colors[Math.floor(Math.random() * colors.length)];
+          setCurrentColor(randomColor);
+          setInitialColorGenerated(randomColor); // 랜덤 색상으로 업데이트
+      }
+  
   };
 const handleDelete =()=>{
   console.log(stickerId);
@@ -130,7 +137,8 @@ const handleDelete =()=>{
     console.log("스티커 delete 완료");
     
     onClose();
-     window.location.reload();
+    //  window.location.reload();
+    setMyStickerCount(prev => prev-1);
 
   })
    .catch(error => {
@@ -156,12 +164,12 @@ const handleDelete =()=>{
           <ModalContent onClick={(event) => event.stopPropagation()}>
             <p>Edit Sticker Text</p>
             <Textarea
-              placeholder="Enter your memo here..."
+              placeholder="write a note about this goal here"
               value={editedText}
               onChange={handleEdit}
             />
             <Textarea
-              placeholder="Enter your impression here...Once you register what you feel, you can modify it, but you can't initialize it to a blank"
+              placeholder="Write down what you have learned and felt through the course of your goals here. You can modify this after registering, but not initializing to a blank!"
               value={editedImpression}
               onChange={handleImpressionChange}
             />
@@ -183,6 +191,7 @@ EditModal.propTypes = {
   sticker: PropTypes.object.isRequired,
   onUpdateSticker: PropTypes.func.isRequired,
   stickerId : PropTypes.number.isRequired,
+  setMyStickerCount:PropTypes.func.isRequired
 };
 
 const ModalBackground = styled.div`
@@ -211,6 +220,7 @@ const Textarea = styled.textarea`
   width: 100%;
   height: 100px;
   margin-bottom: 10px;
+  font-size: 1.2rem;
 `;
 
 const ButtonContainer = styled.div`

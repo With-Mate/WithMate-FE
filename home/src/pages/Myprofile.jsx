@@ -89,7 +89,7 @@ const Myprofile= () =>{
       <BarWrapper>
           <CustomPrevButton onClick={goToPrevSlide}>&lt;</CustomPrevButton>
           <Journeybar>
-            <span>{journeyIndex}번째 여정 보기</span>
+            <span>Viewing My Journey Number {journeyIndex}</span>
             </Journeybar>
           
             <CustomNextButton onClick={goToNextSlide}>&gt;</CustomNextButton>

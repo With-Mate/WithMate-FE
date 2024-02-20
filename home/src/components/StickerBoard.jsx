@@ -54,8 +54,8 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
      setMyStickerCount(response.data.myStickerCount);
         console.log("count:"+myStickerCount);
       setStickers(convertedStickers);
-     
-      console.log("get 완료");
+     console.log(stickers);
+      console.log("스티커 get 완료");
     })
       .catch(error => {
         console.error('Error fetching stickers:', error);
@@ -81,7 +81,7 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
           console.error('Error fetching stickers:', error);
         });
   
-  }, []); 
+  }, [myStickerCount]); 
 
 
   // 스티커 클릭 시 선택된 스티커 상태 업데이트
@@ -155,6 +155,7 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
     // const { shape, color } = getRandomStickerStyle(); // 랜덤한 모양과 색상 선택
     const { shape } = getRandomStickerStyle();
     // 전체 스티커 수가 12개 이상인지 확인
+    console.log(myStickerCount);
     if (myStickerCount >= 6) {
       alert("스티커는 1인당 6개까지만 생성할 수 있습니다!");
       closeModal();
@@ -170,8 +171,8 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
       newSticker = {
         // id: Date.now(),
         text: text,
-        top: `${Math.random() * (100 - stickerHeightSize)}%`,
-        left: `${Math.random() * (95 - stickerWidthSize)}%`,
+        top: `${parseInt(Math.random() * (100 - stickerHeightSize))}%`,
+        left: `${parseInt(Math.random() * (95 - stickerWidthSize))}%`,
         shape: shape,
         color :"white", // 느낀 점이 있으면 랜덤한 색상, 아니면 흰색으로 설정
       //   memo: memo, // 메모 추가
@@ -308,6 +309,7 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
             isOpen={isModalOpen}
             onClose={closeModal}
             onTextSubmit={handleTextSubmit}
+          
           />
         )}
 
@@ -331,6 +333,7 @@ const StickerBoard = ({ backBoxWidth, backBoxHeight }) => {
         onClose={closeEditModal}
         sticker={selectedSticker} 
         onUpdateSticker={onUpdateSticker}
+        setMyStickerCount={setMyStickerCount}
         stickerId = {stickerId} //스티커 아이디 전달(get을 위해)
       />
       )}
@@ -395,7 +398,8 @@ const Sticker = styled.div`
   justify-content: center;
   text-align: center;
   font-weight: bold;
-  font-size: 18px;
+
+  font-size: 1.2rem;
   color: rgba(72, 53, 49, 0.951);
   background-color: ${(props) => props.color};
   /* font-style: italic; 글자 기울이기 */
@@ -404,14 +408,15 @@ const Sticker = styled.div`
   z-index: 2;
   clip-path: ${(props) =>
     props.shape === 'circle'
-    ? 'ellipse(40% 50% at 50% 50%)' 
+    ? 'ellipse(45% 50% at 50% 50%)' 
       : props.shape === 'rectangle1'
-      ? 'inset(5% 5% 5% 5%)' // 정사각형
+      ? 'inset(1% 0% 1% 0%)'// 정사각형
+
       : props.shape === 'ellipse'
-      ? 'ellipse(45% 50% at 50% 50%)' // 타원
+      ? 'ellipse(50% 50% at 50% 50%)' // 타원
       
       : props.shape === 'rectangle2'
-      ? 'inset(5% 5% 5% 5%)' // 직사각형(가로가 긴)
+      ? 'inset(5% 0% 5% 0%)' // 직사각형(가로가 긴)
       : props.shape === 'pentagon'
       ? 'polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%)' // 정오각형
       :props.shape === 'parallelogram'
