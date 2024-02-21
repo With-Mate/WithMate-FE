@@ -81,7 +81,7 @@ const Login = () => {
          //setcookie함수의 첫번째 인자는 쿠키이름, 두번째 인자는 넣을 값이다.
         setCookie("is_login", `${accessToken}`); 
         console.log("token : "+accessToken);
-        window.alert('로그인 성공!');
+        window.alert('Login Success!');
         
         axios.get("http://34.70.229.21:8080/api/match",
         {
@@ -94,11 +94,11 @@ const Login = () => {
           const statusCode = response.status;
           // const matchInfo = response.data;
           if (statusCode === 204) {
-            console.log("메이트 없음");
+            console.log("You don't have a mate yet! Go to the Mate Matching . Register your goals and categories and find your mate !");
             navigate('/mate');
           } else if  (statusCode === 200 ) {
             console.log("매칭 대기상태");
-            window.alert("메이트를 기다리는 중입니다")
+            window.alert("waiting for your mate")
             navigate('/home');
             //페이지 만들기
           } 
@@ -109,7 +109,7 @@ const Login = () => {
         });
     })
       .catch((error) => {
-        window.alert('로그인 실패! 아이디/비밀번호가 올바른지 확인하세요');
+        window.alert('Login failed! Make sure your ID and password are correct');
         console.log(error);
       })      
   };
